@@ -3,6 +3,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 class listComponent extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class listComponent extends React.Component {
   }
 
   componentDidMount() {
-    const url = "http://5b817f7a.ngrok.io/cliente/list";
+    const url = "http://3179d50b.ngrok.io/cliente/list";
     axios
       .get(url)
       .then(res => {
@@ -58,7 +59,9 @@ class listComponent extends React.Component {
           <td>{data.telefono}</td>
           <td>{data.correo}</td>
           <td>
-            <button class="btn btn-outline-info "> Edit </button>
+            <Link class="btn btn-outline-info" to={"/edit/" + data.id}>
+              Edit
+            </Link>
           </td>
           <td>
             <button class="btn btn-outline-danger "> Delete </button>

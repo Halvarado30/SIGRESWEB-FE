@@ -3,6 +3,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
+const baseUrl = "http://3179d50b.ngrok.io";
 
 class EditComponent extends React.Component {
   constructor(props) {
@@ -16,9 +17,35 @@ class EditComponent extends React.Component {
     };
   }
 
+  componentDidMount() {
+    let userId = this.props.match.params.id;
+    const url = baseUrl + "/cliente/get/" + userId;
+    console.log(userId);
+    axios
+      .get(url)
+      .then(res => {
+        if (res.data.success) {
+          const data = res.data.data[0];
+          this.setState({
+            dataCliente: data,
+            campRTN: data.rtn,
+            campNombre: data.nombre,
+            campTelefono: data.telefono,
+            campCorreo: data.correo,
+            campDireccion: data.direccion
+          });
+        } else {
+          alert("Error web service");
+        }
+      })
+      .catch(error => {
+        alert("Error server " + error);
+      });
+  }
+
   render() {
     return (
-      <form>
+      <div>
         <div class="form-row justify-content-center">
           {/* sección para el RTN del cliente */}
           <div class="form-group col-md-7">
@@ -91,60 +118,15 @@ class EditComponent extends React.Component {
               }
             />
           </div>
+
           <div class="form-group col-md-7">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              onClick={() => this.sendSave()}
-            >
-              Guardar
+            <button type="submit" class="btn btn-primary">
+              Actualizar
             </button>
           </div>
         </div>
-      </form>
+      </div>
     );
-  }
-
-  sendSave() {
-    if (this.state.campRTN === "") {
-      alert("Digite el campo de RTN");
-    } else if (this.state.campNombre === "") {
-      alert("Digite el campo de Nombre");
-    } else if (this.state.campTelefono === "") {
-      alert("Digite el campo de Telefono");
-    } else if (this.state.campCorreo === "") {
-      alert("Digite el campo de email");
-    } else if (this.state.campDireccion === "") {
-      alert("Digite el campo de Direccion");
-    } else {
-      const baseUrl = "http://3179d50b.ngrok.io/cliente/crear";
-
-      console.log(this.state.campRTN);
-      console.log(this.state.campNombre);
-      console.log(this.state.campTelefono);
-      console.log(this.state.campDireccion);
-      console.log(this.state.campCorreo);
-      const datapost = {
-        rtn: this.state.campRTN,
-        nombre: this.state.campNombre,
-        telefono: this.state.campTelefono,
-        correo: this.state.campCorreo,
-        direccion: this.state.campDireccion
-      };
-
-      axios
-        .post(baseUrl, datapost)
-        .then(response => {
-          if (response.data.success === true) {
-            alert(response.data.message);
-          } else {
-            alert(response.data.message);
-          }
-        })
-        .catch(error => {
-          alert("Error 34 " + error);
-        });
-    }
   }
 }
 

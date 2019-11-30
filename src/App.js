@@ -9,6 +9,7 @@ import FormCliente from "./module/formCliente";
 import List from "./module/list";
 import ListCliente from "./module/listCliente";
 import Edit from "./module/edit";
+import EditCliente from "./module/editCliente";
 
 function App() {
   return (
@@ -42,9 +43,6 @@ function App() {
                 </Link>
               </li>
             </ul>
-            <Link class="btn btn-info " to="/form">
-              Add Employee
-            </Link>
             <Link class="btn btn-info " to="/formCliente">
               Agregar Cliente
             </Link>
@@ -56,7 +54,7 @@ function App() {
             <Route path="/" exact component={ListCliente} />
             <Route path="/form" component={Form} />
             <Route path="/formCliente" component={FormCliente} />
-            <Route path="/edit/:employeeId" component={Edit} />
+            <Route path="/edit/:id" component={EditCliente} />
           </div>
         </div>
       </div>
