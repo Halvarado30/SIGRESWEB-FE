@@ -5,6 +5,12 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+// Libreria de Sweetalert2
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
+
+const baseUrl = "http://a0a44d18.ngrok.io";
+
 class listComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +20,11 @@ class listComponent extends React.Component {
   }
 
   componentDidMount() {
-    const url = "http://a0a44d18.ngrok.io/cliente/list";
+    this.loadCliente();
+  }
+
+  loadCliente() {
+    const url = baseUrl + "/cliente/list";
     axios
       .get(url)
       .then(res => {
@@ -64,11 +74,53 @@ class listComponent extends React.Component {
             </Link>
           </td>
           <td>
-            <button class="btn btn-outline-danger "> Delete </button>
+            <button
+              class="btn btn-outline-danger"
+              onClick={() => this.onDelete(data.id)}
+            >
+              {" "}
+              Delete{" "}
+            </button>
           </td>
         </tr>
       );
     });
+  }
+
+  onDelete(id) {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "No podrás recuperar la información eliminada",
+      type: "Alerta",
+      showCancelButton: true,
+      confirmButtonText: "¡Sí, Eliminar!",
+      cancelButtonText: "No, Conservar"
+    }).then(result => {
+      if (result.value) {
+        this.sendDelete(id);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelado", "Tu información sigue aquí", "error");
+      }
+    });
+  }
+
+  sendDelete(id) {
+    // url de backend
+    const url = baseUrl + "/cliente/delete"; // parametro del datapost
+    // red
+    axios
+      .post(url, {
+        id: id
+      })
+      .then(response => {
+        if (response.data.success) {
+          Swal.fire("¡Eliminado!", "Tu cliente ha sido eliminado.", "correcto");
+          this.loadCliente();
+        }
+      })
+      .catch(error => {
+        alert("Error 325 ");
+      });
   }
 }
 
