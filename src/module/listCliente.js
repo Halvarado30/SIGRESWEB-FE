@@ -14,7 +14,7 @@ class listComponent extends React.Component {
   }
 
   componentDidMount() {
-    const url = "http://3179d50b.ngrok.io/cliente/list";
+    const url = "http://a0a44d18.ngrok.io/cliente/list";
     axios
       .get(url)
       .then(res => {

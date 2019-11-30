@@ -3,7 +3,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
-const baseUrl = "http://3179d50b.ngrok.io";
+const baseUrl = "http://a0a44d18.ngrok.io";
 
 class EditComponent extends React.Component {
   constructor(props) {
@@ -120,13 +120,45 @@ class EditComponent extends React.Component {
           </div>
 
           <div class="form-group col-md-7">
-            <button type="submit" class="btn btn-primary">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              onClick={() => this.sendUpdate()}
+            >
               Actualizar
             </button>
           </div>
         </div>
       </div>
     );
+  }
+
+  sendUpdate() {
+    //  get parameter id
+    let userId = this.props.match.params.id;
+    // url de backend
+    const Url = baseUrl + "/cliente/update/" + userId;
+    // parametros de datos post
+    const datapost = {
+      rtn: this.state.campRTN,
+      nombre: this.state.campNombre,
+      telefono: this.state.campTelefono,
+      correo: this.state.campCorreo,
+      direccion: this.state.campDireccion
+    };
+
+    axios
+      .post(Url, datapost)
+      .then(response => {
+        if (response.data.success === true) {
+          alert(response.data.message);
+        } else {
+          alert("Error");
+        }
+      })
+      .catch(error => {
+        alert("Error 34 " + error);
+      });
   }
 }
 
