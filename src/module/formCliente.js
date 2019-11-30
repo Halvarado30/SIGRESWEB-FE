@@ -117,7 +117,7 @@ class EditComponent extends React.Component {
     } else if (this.state.campDireccion === "") {
       alert("Digite el campo de Direccion");
     } else {
-      const baseUrl = "http://a0a44d18.ngrok.io/cliente/crear";
+      const baseUrl = "http://839cb0c8.ngrok.io/cliente/crear";
 
       console.log(this.state.campRTN);
       console.log(this.state.campNombre);

@@ -3,7 +3,12 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
-const baseUrl = "http://a0a44d18.ngrok.io";
+
+// Libreria de Sweetalert2
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
+
+const baseUrl = "http://839cb0c8.ngrok.io";
 
 class EditComponent extends React.Component {
   constructor(props) {
@@ -44,6 +49,7 @@ class EditComponent extends React.Component {
   }
 
   render() {
+    let userId = this.props.match.params.id;
     return (
       <div>
         <div class="form-row justify-content-center">
@@ -123,7 +129,7 @@ class EditComponent extends React.Component {
             <button
               type="submit"
               class="btn btn-primary"
-              onClick={() => this.sendUpdate()}
+              onClick={() => this.onUpdate(userId)}
             >
               Actualizar
             </button>
@@ -133,11 +139,27 @@ class EditComponent extends React.Component {
     );
   }
 
-  sendUpdate() {
-    //  get parameter id
-    let userId = this.props.match.params.id;
+  onUpdate(userId) {
+    // Mensaje sweetalert
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "La información será modificada",
+      type: "Alerta",
+      showCancelButton: true,
+      confirmButtonText: "¡Sí, Actualizar!",
+      cancelButtonText: "No, Conservar"
+    }).then(result => {
+      if (result.value) {
+        this.sendUpdate(userId);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelado", "Tu información sigue igual", "error");
+      }
+    });
+  }
+
+  sendUpdate(id) {
     // url de backend
-    const Url = baseUrl + "/cliente/update/" + userId;
+    const Url = baseUrl + "/cliente/update/" + id;
     // parametros de datos post
     const datapost = {
       rtn: this.state.campRTN,
@@ -150,8 +172,12 @@ class EditComponent extends React.Component {
     axios
       .post(Url, datapost)
       .then(response => {
-        if (response.data.success === true) {
-          alert(response.data.message);
+        if (response.data.success) {
+          Swal.fire(
+            "¡Actualizado!",
+            "La información del cliente ha sido modificada.",
+            "correcto"
+          );
         } else {
           alert("Error");
         }

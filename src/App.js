@@ -10,6 +10,7 @@ import List from "./module/list";
 import ListCliente from "./module/listCliente";
 import Edit from "./module/edit";
 import EditCliente from "./module/editCliente";
+import Areas from "./module/areas";
 
 function App() {
   return (
@@ -46,6 +47,9 @@ function App() {
             <Link class="btn btn-info " to="/formCliente">
               Agregar Cliente
             </Link>
+            <Link class="btn btn-info " to="/areas">
+              Áreas
+            </Link>
           </div>
         </nav>
 
@@ -55,6 +59,7 @@ function App() {
             <Route path="/form" component={Form} />
             <Route path="/formCliente" component={FormCliente} />
             <Route path="/edit/:id" component={EditCliente} />
+            <Route path="/areas" component={Areas} />
           </div>
         </div>
       </div>

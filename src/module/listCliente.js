@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 
-const baseUrl = "http://a0a44d18.ngrok.io";
+const baseUrl = "http://839cb0c8.ngrok.io";
 
 class listComponent extends React.Component {
   constructor(props) {
@@ -70,7 +70,7 @@ class listComponent extends React.Component {
           <td>{data.correo}</td>
           <td>
             <Link class="btn btn-outline-info" to={"/edit/" + data.id}>
-              Edit
+              Editar
             </Link>
           </td>
           <td>
@@ -79,7 +79,7 @@ class listComponent extends React.Component {
               onClick={() => this.onDelete(data.id)}
             >
               {" "}
-              Delete{" "}
+              Eliminar{" "}
             </button>
           </td>
         </tr>
@@ -99,7 +99,7 @@ class listComponent extends React.Component {
       if (result.value) {
         this.sendDelete(id);
       } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire("Cancelado", "Tu información sigue aquí", "error");
+        Swal.fire("Cancelado", "La información sigue aquí", "error");
       }
     });
   }
@@ -114,7 +114,7 @@ class listComponent extends React.Component {
       })
       .then(response => {
         if (response.data.success) {
-          Swal.fire("¡Eliminado!", "Tu cliente ha sido eliminado.", "correcto");
+          Swal.fire("¡Eliminado!", "El cliente ha sido eliminado.", "correcto");
           this.loadCliente();
         }
       })
