@@ -3,12 +3,13 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
+import * as globalUrl from "./variable";
 
 // Libreria de Sweetalert2
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 
-const baseUrl = "http://839cb0c8.ngrok.io";
+const baseUrl = globalUrl.url;
 
 class EditComponent extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class EditComponent extends React.Component {
 
   componentDidMount() {
     let userId = this.props.match.params.id;
+    alert("DATO: " + userId);
     const url = baseUrl + "/cliente/get/" + userId;
     console.log(userId);
     axios
@@ -50,6 +52,7 @@ class EditComponent extends React.Component {
 
   render() {
     let userId = this.props.match.params.id;
+    console.log(userId);
     return (
       <div>
         <div class="form-row justify-content-center">
@@ -160,6 +163,7 @@ class EditComponent extends React.Component {
   sendUpdate(id) {
     // url de backend
     const Url = baseUrl + "/cliente/update/" + id;
+    console.log("este es tu id: " + id);
     // parametros de datos post
     const datapost = {
       rtn: this.state.campRTN,
@@ -168,6 +172,12 @@ class EditComponent extends React.Component {
       correo: this.state.campCorreo,
       direccion: this.state.campDireccion
     };
+
+    console.log(datapost.rtn);
+    console.log(datapost.nombre);
+    console.log(datapost.telefono);
+    console.log(datapost.correo);
+    console.log(datapost.direccion);
 
     axios
       .post(Url, datapost)

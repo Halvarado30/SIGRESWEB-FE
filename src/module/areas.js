@@ -2,21 +2,28 @@ import React from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import { Link } from "react-router-dom";
+import * as globalUrl from "./variable";
 import axios from "axios";
-const baseUrl = "http://839cb0c8.ngrok.io";
+const baseUrl = globalUrl.url;
 
 class EditComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listArea: []
+      listArea: [],
+      listMesa: [],
+      id: 1
     };
+    this.cambioId = this.cambioId.bind(this);
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.loadArea();
+    this.loadMesa();
   }
 
+  // Cargar lista de áreas
   loadArea() {
     const url = baseUrl + "/area/list";
     axios
@@ -30,21 +37,101 @@ class EditComponent extends React.Component {
       });
   }
 
+  // Cargar lista de mesas
+  loadMesa() {
+    const url = baseUrl + "/mesas/list";
+    axios
+      .get(url)
+      .then(res => {
+        const data = res.data;
+        this.setState({ listMesa: data });
+      })
+      .catch(error => {
+        alert(error);
+      });
+  }
+
   render() {
     return (
-      <div class="form-group col-md-6">
-        <label for="inputState">Areas: </label>
+      <div>
+        {/* Sección para las áreas */}
+        <div class="form-group col-md-6">
+          <label for="inputState">Areas: </label>
 
-        <select id="inputState" class="form-control">
-          {this.loadFillData()}
-        </select>
+          <select
+            value={this.state.value}
+            id="inputState"
+            class="form-control"
+            onChange={this.cambioId}
+          >
+            <option value="" disabled selected>
+              {" "}
+              Seleccione un área
+            </option>
+            {/* Llenado de las áreas */}
+            {this.loadFillData()}
+          </select>
+          {/* <h1>Id seleccionado: {this.state.id}</h1> */}
+        </div>
+
+        <div>
+          <table class="table table-hover table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">idArea</th>
+                <th scope="col">Nombre Mesa</th>
+                <th scope="col">estado</th>
+                <th colspan="2">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>01</th>
+                <th>R01</th>
+                <td>Ocupada</td>
+                <td>
+                  <button class="btn btn-outline-info "> Pedido </button>
+                </td>
+              </tr>
+            </tbody>
+            {/* Llenado de las mesas */}
+            {this.loadFillData2(this.state.id)}
+          </table>
+        </div>
       </div>
     );
   }
 
+  cambioId(e) {
+    console.log(e);
+    this.setState({
+      id: e.target.value
+    });
+  }
+
+  // Carga de datos de area para mostrar
   loadFillData() {
     return this.state.listArea.map(data => {
-      return <option key={data.id}>{data.Area}</option>;
+      return <option value={data.CodigoArea}>{data.Area}</option>;
+    });
+  }
+
+  // Carga de datos de mesa para mostrar
+  loadFillData2(id) {
+    const valorfiltrado = this.state.listMesa.filter(inf => {
+      return inf.codigoArea == id;
+    });
+    return valorfiltrado.map(data => {
+      return (
+        <tr>
+          <td>{data.codigoArea}</td>
+          <td>{data.mesa}</td>
+          <td>{data.estado}</td>
+          <td>
+            <button class="btn btn-outline-info">Pedido</button>
+          </td>
+        </tr>
+      );
     });
   }
 }

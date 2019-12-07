@@ -4,12 +4,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import * as globalUrl from "./variable";
 // Libreria de Sweetalert2
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 
-const baseUrl = "http://839cb0c8.ngrok.io";
+// const baseUrl = "http://c83f4f51.ngrok.io";
+const baseUrl = globalUrl.url;
 
 class listComponent extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class listComponent extends React.Component {
     this.loadCliente();
   }
 
+  // Cargar lista de clientes
   loadCliente() {
     const url = baseUrl + "/cliente/list";
     axios
@@ -41,42 +43,44 @@ class listComponent extends React.Component {
       <table class="table table-hover table-striped">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">idregistro</th>
-            <th scope="col">rtn</th>
+            <th scope="col">Id Cliente</th>
+            <th scope="col">RTN</th>
             <th scope="col">Nombre</th>
             <th scope="col">Direccion</th>
             <th scope="col">Telefono</th>
             <th scope="col">Correo</th>
-            <th colspan="2">Action</th>
+            <th colspan="2">Acciones</th>
           </tr>
         </thead>
         <tbody>
           <tr></tr>
+          {/* Llenado de lista de clientes */}
           {this.loadFillData()}
         </tbody>
       </table>
     );
   }
 
+  // Carga de los datos de clientes
   loadFillData() {
     return this.state.listCliente.map(data => {
       return (
         <tr>
-          <th>{data.id}</th>
+          <th>{data.idregistro}</th>
           <td>{data.rtn}</td>
           <td>{data.nombre}</td>
           <td>{data.direccion}</td>
           <td>{data.telefono}</td>
           <td>{data.correo}</td>
           <td>
-            <Link class="btn btn-outline-info" to={"/edit/" + data.id}>
+            <Link class="btn btn-outline-info" to={"/edit/" + data.idregistro}>
               Editar
             </Link>
           </td>
           <td>
             <button
               class="btn btn-outline-danger"
-              onClick={() => this.onDelete(data.id)}
+              onClick={() => this.onDelete(data.idregistro)}
             >
               {" "}
               Eliminar{" "}
@@ -87,6 +91,7 @@ class listComponent extends React.Component {
     });
   }
 
+  // Área de confirmación para eliminar un cliente
   onDelete(id) {
     Swal.fire({
       title: "¿Estás seguro?",
@@ -104,6 +109,7 @@ class listComponent extends React.Component {
     });
   }
 
+  // Dato del cliente enviado para eliminar
   sendDelete(id) {
     // url de backend
     const url = baseUrl + "/cliente/delete"; // parametro del datapost

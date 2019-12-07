@@ -3,6 +3,8 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
+import * as globalUrl from "./variable";
+const bUrl = globalUrl.url;
 
 class EditComponent extends React.Component {
   constructor(props) {
@@ -105,6 +107,7 @@ class EditComponent extends React.Component {
     );
   }
 
+  // Sección para guardar los datos del cliente en la base de datos
   sendSave() {
     if (this.state.campRTN === "") {
       alert("Digite el campo de RTN");
@@ -117,7 +120,7 @@ class EditComponent extends React.Component {
     } else if (this.state.campDireccion === "") {
       alert("Digite el campo de Direccion");
     } else {
-      const baseUrl = "http://839cb0c8.ngrok.io/cliente/crear";
+      const baseUrl = bUrl + "/cliente/crear";
 
       console.log(this.state.campRTN);
       console.log(this.state.campNombre);
