@@ -15,28 +15,7 @@ class EditComponent extends React.Component {
       campLogin: "",
       campContrasenia: ""
     };
-
-    // this.onChange = this.onChange.bind(this);
-    // this.onSubmit = this.onSubmit.bind(this);
   }
-
-  // onChange(e) {
-  //   this.setState({ [e.target.name]: e.target.value });
-  // }
-  // onSubmit(e) {
-  //   e.preventDefault();
-
-  //   const user = {
-  //     email: this.state.email,
-  //     password: this.state.password
-  //   };
-
-  // login(user).then(res => {
-  //   if (res) {
-  //     this.props.history.push(`/profile`);
-  //   }
-  // });
-  // }
 
   render() {
     return (
@@ -53,8 +32,6 @@ class EditComponent extends React.Component {
               onChange={value =>
                 this.setState({ campLogin: value.target.value })
               }
-              // value={this.state.campLogin}
-              // onChange={this.onChange}
               required
             />
           </div>
@@ -66,8 +43,6 @@ class EditComponent extends React.Component {
               type="password"
               class="form-control"
               placeholder="••••••••••••••"
-              // value={this.state.campContrasenia}
-              // onChange={this.onChange}
               value={this.state.campContrasenia}
               onChange={value =>
                 this.setState({ campContrasenia: value.target.value })
@@ -96,7 +71,7 @@ class EditComponent extends React.Component {
     } else if (this.state.campContrasenia === "") {
       alert("Digite la contraseña");
     } else {
-      const Url = baseUrl + "/login";
+      const bUrl = baseUrl + "/usuario/login";
 
       console.log(this.state.campLogin);
       console.log(this.state.campContrasenia);
@@ -106,9 +81,8 @@ class EditComponent extends React.Component {
       };
 
       console.log(datapost);
-      alert("ESPERE");
       axios
-        .post(Url, datapost)
+        .post(bUrl, datapost)
         .then(response => {
           if (response.data.success === true) {
             alert(response.data.message);

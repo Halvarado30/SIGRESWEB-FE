@@ -11,7 +11,7 @@ import ListCliente from "./module/listCliente";
 import Edit from "./module/edit";
 import EditCliente from "./module/editCliente";
 import Areas from "./module/areas";
-import Pedidos from "./module/formPedido";
+import Pedido from "./module/formPedido";
 import Login from "./module/login";
 
 function App() {
@@ -58,6 +58,9 @@ function App() {
             <Link class="btn btn-info " to="/formPedido">
               Agregar Pedido
             </Link>
+            <Link class="btn btn-outline-info" to={"/formCliente"}>
+              Siguiente
+            </Link>
           </div>
         </nav>
 
@@ -70,7 +73,7 @@ function App() {
             <Route path="/areas" component={Areas} />
             <Route path="/listM/:id" component={Areas} />
             <Route path="/login" component={Login} />
-            <Route path="/formPedido" component={Pedidos} />
+            <Route path="/formPedido/:id" component={Pedido} />
           </div>
         </div>
       </div>

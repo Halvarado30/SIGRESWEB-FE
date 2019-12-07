@@ -25,7 +25,6 @@ class EditComponent extends React.Component {
 
   componentDidMount() {
     let userId = this.props.match.params.id;
-    alert("DATO: " + userId);
     const url = baseUrl + "/cliente/get/" + userId;
     console.log(userId);
     axios
@@ -182,7 +181,7 @@ class EditComponent extends React.Component {
     axios
       .post(Url, datapost)
       .then(response => {
-        if (response.data.success) {
+        if (response.data.success == true) {
           Swal.fire(
             "¡Actualizado!",
             "La información del cliente ha sido modificada.",

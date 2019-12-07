@@ -78,24 +78,16 @@ class EditComponent extends React.Component {
           <table class="table table-hover table-striped">
             <thead class="thead-dark">
               <tr>
-                <th scope="col">idArea</th>
+                <th scope="col">idMesa</th>
                 <th scope="col">Nombre Mesa</th>
                 <th scope="col">estado</th>
                 <th colspan="2">Acciones</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th>01</th>
-                <th>R01</th>
-                <td>Ocupada</td>
-                <td>
-                  <button class="btn btn-outline-info "> Pedido </button>
-                </td>
-              </tr>
+              {/* Llenado de las mesas */}
+              {this.loadFillData2(this.state.id)}
             </tbody>
-            {/* Llenado de las mesas */}
-            {this.loadFillData2(this.state.id)}
           </table>
         </div>
       </div>
@@ -122,13 +114,20 @@ class EditComponent extends React.Component {
       return inf.codigoArea == id;
     });
     return valorfiltrado.map(data => {
+      // alert("DATO DE AREA: " + data.codigoArea);
       return (
         <tr>
-          <td>{data.codigoArea}</td>
+          <th>{data.codigoArea}</th>
+          <td>{data.idregistro}</td>
           <td>{data.mesa}</td>
           <td>{data.estado}</td>
           <td>
-            <button class="btn btn-outline-info">Pedido</button>
+            <Link
+              class="btn btn-outline-info"
+              to={"/formPedido/" + data.idregistro}
+            >
+              Pedido
+            </Link>
           </td>
         </tr>
       );

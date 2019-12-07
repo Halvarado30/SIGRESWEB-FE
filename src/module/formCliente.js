@@ -101,6 +101,7 @@ class EditComponent extends React.Component {
             >
               Guardar
             </button>
+            <button class="btn btn-primary">Buscar</button>
           </div>
         </div>
       </form>
