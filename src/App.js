@@ -13,6 +13,8 @@ import EditCliente from "./module/editCliente";
 import Areas from "./module/areas";
 import Pedido from "./module/formPedido";
 import Login from "./module/login";
+import PedidoList from "./module/pedidoList";
+import mesasOcupadas from "./module/mesasOcupadas";
 
 function App() {
   return (
@@ -40,7 +42,7 @@ function App() {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                <Link class="nav-link" to="/">
+                <Link class="nav-link" to="/listCliente">
                   {" "}
                   Lista Clientes{" "}
                 </Link>
@@ -49,7 +51,7 @@ function App() {
             <Link class="btn btn-info " to="/formCliente">
               Agregar Cliente
             </Link>
-            <Link class="btn btn-info " to="/areas">
+            <Link class="btn btn-info " to="/">
               Áreas
             </Link>
             <Link class="btn btn-info " to="/login">
@@ -57,6 +59,9 @@ function App() {
             </Link>
             <Link class="btn btn-info " to="/formPedido">
               Agregar Pedido
+            </Link>
+            <Link class="btn btn-outline-info" to={"/MesasOcupadas"}>
+              Mesas
             </Link>
             <Link class="btn btn-outline-info" to={"/formCliente"}>
               Siguiente
@@ -66,14 +71,16 @@ function App() {
 
         <div class="container py-4">
           <div class="row">
-            <Route path="/" exact component={ListCliente} />
+            <Route path="/" exact component={Areas} />
+            <Route path="/listCliente" component={ListCliente} />
             <Route path="/form" component={Form} />
             <Route path="/formCliente" component={FormCliente} />
             <Route path="/edit/:id" component={EditCliente} />
-            <Route path="/areas" component={Areas} />
             <Route path="/listM/:id" component={Areas} />
             <Route path="/login" component={Login} />
             <Route path="/formPedido/:id" component={Pedido} />
+            <Route path="/pedidolist/:id" component={PedidoList} />
+            <Route path="/MesasOcupadas" component={mesasOcupadas} />
           </div>
         </div>
       </div>

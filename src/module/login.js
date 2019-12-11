@@ -81,6 +81,7 @@ class EditComponent extends React.Component {
       };
 
       console.log(datapost);
+      alert("HOLA");
       axios
         .post(bUrl, datapost)
         .then(response => {

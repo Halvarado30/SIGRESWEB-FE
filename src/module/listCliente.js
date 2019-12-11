@@ -40,24 +40,26 @@ class listComponent extends React.Component {
 
   render() {
     return (
-      <table class="table table-hover table-striped table-bordered table-responsive">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">Id Cliente</th>
-            <th scope="col">RTN</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Direccion</th>
-            <th scope="col">Telefono</th>
-            <th scope="col">Correo</th>
-            <th colspan="2">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr></tr>
-          {/* Llenado de lista de clientes */}
-          {this.loadFillData()}
-        </tbody>
-      </table>
+      <div>
+        <table class="table table-hover table-striped table-bordered table-responsive">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Id Cliente</th>
+              <th scope="col">RTN</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Direccion</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Correo</th>
+              <th colspan="2">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr></tr>
+            {/* Llenado de lista de clientes */}
+            {this.loadFillData()}
+          </tbody>
+        </table>
+      </div>
     );
   }
 

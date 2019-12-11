@@ -6,36 +6,17 @@ import { Link } from "react-router-dom";
 import * as globalUrl from "./variable";
 import axios from "axios";
 const baseUrl = globalUrl.url;
-const usuario = 2;
 
-class AreaComponent extends React.Component {
+class MesaComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      listArea: [],
-      listMesa: [],
-      id: 1
+      listMesa: []
     };
-    this.cambioId = this.cambioId.bind(this);
   }
 
   componentWillMount() {
-    this.loadArea();
     this.loadMesa();
-  }
-
-  // Cargar lista de áreas
-  loadArea() {
-    const url = baseUrl + "/area/list";
-    axios
-      .get(url)
-      .then(res => {
-        const data = res.data;
-        this.setState({ listArea: data });
-      })
-      .catch(error => {
-        alert(error);
-      });
   }
 
   // Cargar lista de mesas
@@ -55,26 +36,6 @@ class AreaComponent extends React.Component {
   render() {
     return (
       <div>
-        {/* Sección para las áreas */}
-        <div class="form-group col-md-6">
-          <label for="inputState">Areas: </label>
-
-          <select
-            value={this.state.value}
-            id="inputState"
-            class="form-control"
-            onChange={this.cambioId}
-          >
-            <option value="" disabled selected>
-              {" "}
-              Seleccione un área
-            </option>
-            {/* Llenado de las áreas */}
-            {this.loadFillData()}
-          </select>
-          {/* <h1>Id seleccionado: {this.state.id}</h1> */}
-        </div>
-
         <div>
           <table class="table table-hover table-striped">
             <thead class="thead-dark">
@@ -96,24 +57,10 @@ class AreaComponent extends React.Component {
     );
   }
 
-  cambioId(e) {
-    console.log(e);
-    this.setState({
-      id: e.target.value
-    });
-  }
-
-  // Carga de datos de area para mostrar
-  loadFillData() {
-    return this.state.listArea.map(data => {
-      return <option value={data.CodigoArea}>{data.Area}</option>;
-    });
-  }
-
   // Carga de datos de mesa para mostrar
   loadFillData2(id) {
     const valorfiltrado = this.state.listMesa.filter(inf => {
-      return inf.codigoArea == id && inf.estado == "L";
+      return inf.estado == "O";
     });
     return valorfiltrado.map(data => {
       return (
@@ -125,10 +72,10 @@ class AreaComponent extends React.Component {
           <td>
             <Link
               class="btn btn-outline-info"
-              to={"/formPedido/" + data.idregistro}
-              onClick={() => this.sendSave()}
+              to={"/"}
+              onClick={() => this.sendUpdate(data.idregistro)}
             >
-              Pedido
+              Liberar
             </Link>
           </td>
         </tr>
@@ -136,16 +83,38 @@ class AreaComponent extends React.Component {
     });
   }
 
-  sendSave() {
-    const Url = baseUrl + "/pedidomesa/crear";
+  sendUpdate(id) {
+    const Url = baseUrl + "/mesas/update/" + id;
     const datapost = {
-      idMesero: usuario
+      estado: "L"
     };
 
     console.log(datapost);
+    alert("tu codigo cambio");
 
     axios
       .post(Url, datapost)
+      .then(response => {
+        if (response.data.success === true) {
+          alert(response.data.message);
+          this.sendDelete(id);
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch(error => {
+        alert("Error 34 " + error);
+      });
+  }
+
+  sendDelete(Mesa) {
+    const Url = baseUrl + "/pedido/delete/" + Mesa;
+    alert("se borraron los datos");
+
+    axios
+      .post(Url, {
+        Mesa: Mesa
+      })
       .then(response => {
         if (response.data.success === true) {
           alert(response.data.message);
@@ -159,4 +128,4 @@ class AreaComponent extends React.Component {
   }
 }
 
-export default AreaComponent;
+export default MesaComponent;
