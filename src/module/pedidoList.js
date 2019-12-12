@@ -76,7 +76,7 @@ class EditComponent extends React.Component {
           <Link
             class="btn btn-outline-info"
             onClick={() => this.sendSave(userId)}
-            to={"/areas"}
+            to={"/"}
           >
             Realizar comanda
           </Link>

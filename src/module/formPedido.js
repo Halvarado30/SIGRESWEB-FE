@@ -203,6 +203,7 @@ class EditComponent extends React.Component {
   }
 
   sendSave(a, b, c, d) {
+    var producto = a;
     var valorinput = document.getElementById(d).value;
     var otrovalor = parseInt(valorinput);
     let userId = this.props.match.params.id;
@@ -213,6 +214,30 @@ class EditComponent extends React.Component {
       PrecioProducto: c,
       CantidadProducto: otrovalor,
       Mesa: userId
+    };
+
+    console.log(datapost);
+
+    axios
+      .post(Url, datapost)
+      .then(response => {
+        if (response.data.success === true) {
+          alert(response.data.message);
+          this.sendSaveDetalle(producto, otrovalor);
+        } else {
+          alert(response.data.message);
+        }
+      })
+      .catch(error => {
+        alert("Error 34 " + error);
+      });
+  }
+
+  sendSaveDetalle(a, b) {
+    const Url = baseUrl + "/detalle/creardetalle";
+    const datapost = {
+      CodigoProducto: a,
+      Cantidad: b
     };
 
     console.log(datapost);
