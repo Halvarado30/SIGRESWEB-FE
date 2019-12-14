@@ -36,7 +36,7 @@ class MesaComponent extends React.Component {
   render() {
     return (
       <div>
-        <div>
+        <div className="form-group float-left">
           <table class="table table-hover table-striped">
             <thead class="thead-dark">
               <tr>
@@ -52,6 +52,11 @@ class MesaComponent extends React.Component {
               {this.loadFillData2(this.state.id)}
             </tbody>
           </table>
+        </div>
+        <div className="form-group col-md-6 float-right">
+          <Link className="btn btn-outline-info" to={"/"}>
+            Regresar
+          </Link>
         </div>
       </div>
     );

@@ -20,7 +20,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        {/* <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <a
             class="navbar-brand"
             href="https://www.facebook.com/"
@@ -48,26 +48,11 @@ function App() {
                 </Link>
               </li>
             </ul>
-            <Link class="btn btn-info " to="/formCliente">
-              Agregar Cliente
-            </Link>
-            <Link class="btn btn-info " to="/">
-              Áreas
-            </Link>
             <Link class="btn btn-info " to="/login">
               Login
             </Link>
-            <Link class="btn btn-info " to="/formPedido">
-              Agregar Pedido
-            </Link>
-            <Link class="btn btn-outline-info" to={"/MesasOcupadas"}>
-              Mesas
-            </Link>
-            <Link class="btn btn-outline-info" to={"/formCliente"}>
-              Siguiente
-            </Link>
           </div>
-        </nav>
+        </nav> */}
 
         <div class="container py-4">
           <div class="row">

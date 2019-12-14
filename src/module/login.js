@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
 import * as globalUrl from "./variable";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const baseUrl = globalUrl.url;
 
@@ -12,14 +12,21 @@ class EditComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      errors: {},
       campLogin: "",
-      campContrasenia: ""
+      campContrasenia: "",
+      isSignedUp: false
     };
+
+    // this.sendSave = this.sendSave.bind(this);
   }
 
   render() {
+    if (this.state.isSignedUp) {
+      return <Redirect to={{ pathname: "/" }} />;
+    }
     return (
-      <form>
+      <div>
         <div class="form-row justify-content-center">
           {/* sección para el nombre de Usuario */}
           <div class="form-group col-md-7">
@@ -61,7 +68,7 @@ class EditComponent extends React.Component {
             </button>
           </div>
         </div>
-      </form>
+      </div>
     );
   }
 
@@ -81,21 +88,31 @@ class EditComponent extends React.Component {
       };
 
       console.log(datapost);
-      alert("HOLA");
-      axios
+
+      return axios
         .post(bUrl, datapost)
         .then(response => {
-          if (response.data.success === true) {
-            alert(response.data.message);
-          } else {
-            alert(response.data.message);
+          if (response.status === 200) {
+            this.setState({ isSignedUp: true });
           }
         })
         .catch(error => {
-          alert("Error 34 " + error);
+          this.setState({
+            isSignedUp: false,
+            campLogin: "",
+            campContrasenia: ""
+          });
         });
     }
   }
+
+  // handleLoginChange(e) {
+  //   this.setState({ campLogin: e.target.value });
+  // }
+
+  // handlePasswordChange(e) {
+  //   this.setState({ campContrasenia: e.target.value });
+  // }
 }
 
 export default EditComponent;

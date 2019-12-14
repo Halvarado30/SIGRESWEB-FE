@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Link } from "react-router-dom";
 import * as globalUrl from "./variable";
+import Nav from "../components/Navbar";
 import axios from "axios";
 const baseUrl = globalUrl.url;
 const usuario = 2;
@@ -55,14 +56,20 @@ class AreaComponent extends React.Component {
   render() {
     return (
       <div>
+        {/* <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            
+          </div>
+        </nav> */}
+        <Nav />
         {/* Sección para las áreas */}
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6 float-left">
           <label for="inputState">Areas: </label>
 
           <select
             value={this.state.value}
             id="inputState"
-            class="form-control"
+            className="form-control"
             onChange={this.cambioId}
           >
             <option value="" disabled selected>
@@ -75,6 +82,11 @@ class AreaComponent extends React.Component {
           {/* <h1>Id seleccionado: {this.state.id}</h1> */}
         </div>
 
+        <div className="form-group col-md-6 float-right">
+          <Link className="btn btn-outline-info" to={"/MesasOcupadas"}>
+            Ver mesas ocupadas
+          </Link>
+        </div>
         <div>
           <table class="table table-hover table-striped">
             <thead class="thead-dark">

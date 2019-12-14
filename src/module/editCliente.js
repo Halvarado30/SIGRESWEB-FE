@@ -53,91 +53,95 @@ class EditComponent extends React.Component {
     let userId = this.props.match.params.id;
     console.log(userId);
     return (
-      <div>
-        <div class="form-row justify-content-center">
-          {/* sección para el RTN del cliente */}
-          <div class="form-group col-md-7">
-            <label for="inputPassword4">RTN</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="RTN del Cliente"
-              value={this.state.campRTN}
-              onChange={value => this.setState({ campRTN: value.target.value })}
-              required
-            />
-          </div>
+      <form>
+        <div>
+          <div class="form-row justify-content-center">
+            {/* sección para el RTN del cliente */}
+            <div class="form-group col-md-7">
+              <label for="inputPassword4">RTN</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="RTN del Cliente"
+                value={this.state.campRTN}
+                onChange={value =>
+                  this.setState({ campRTN: value.target.value })
+                }
+                required
+              />
+            </div>
 
-          {/* sección para el nombre del cliente */}
-          <div class="form-group col-md-7">
-            <label for="inputPassword4">Nombre cliente</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Nombre del Cliente"
-              value={this.state.campNombre}
-              onChange={value =>
-                this.setState({ campNombre: value.target.value })
-              }
-              required
-            />
-          </div>
+            {/* sección para el nombre del cliente */}
+            <div class="form-group col-md-7">
+              <label for="inputPassword4">Nombre cliente</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Nombre del Cliente"
+                value={this.state.campNombre}
+                onChange={value =>
+                  this.setState({ campNombre: value.target.value })
+                }
+                required
+              />
+            </div>
 
-          {/* sección para el teléfono del cliente */}
-          <div class="form-group col-md-7">
-            <label for="inputPassword4">Teléfono</label>
-            <input
-              type="number"
-              class="form-control"
-              placeholder="+504 XXXX-XXXX"
-              value={this.state.campTelefono}
-              onChange={value =>
-                this.setState({ campTelefono: value.target.value })
-              }
-              required
-            />
-          </div>
+            {/* sección para el teléfono del cliente */}
+            <div class="form-group col-md-7">
+              <label for="inputPassword4">Teléfono</label>
+              <input
+                type="number"
+                class="form-control"
+                placeholder="+504 XXXX-XXXX"
+                value={this.state.campTelefono}
+                onChange={value =>
+                  this.setState({ campTelefono: value.target.value })
+                }
+                required
+              />
+            </div>
 
-          {/* sección para el correo del cliente */}
-          <div class="form-group col-md-7">
-            <label for="inputEmail4">Correo electrónico</label>
-            <input
-              type="email"
-              class="form-control"
-              placeholder="nombre@dominio"
-              value={this.state.campCorreo}
-              onChange={value =>
-                this.setState({ campCorreo: value.target.value })
-              }
-            />
-          </div>
+            {/* sección para el correo del cliente */}
+            <div class="form-group col-md-7">
+              <label for="inputEmail4">Correo electrónico</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="nombre@dominio"
+                value={this.state.campCorreo}
+                onChange={value =>
+                  this.setState({ campCorreo: value.target.value })
+                }
+              />
+            </div>
 
-          {/* sección para la dirección del cliente */}
-          <div class="form-group col-md-7">
-            <label for="inputAddress">Dirección</label>
-            <input
-              type="text"
-              class="form-control"
-              id="inputAddress"
-              placeholder="Barrio XXXXX Calle XXXX"
-              value={this.state.campDireccion}
-              onChange={value =>
-                this.setState({ campDireccion: value.target.value })
-              }
-            />
-          </div>
+            {/* sección para la dirección del cliente */}
+            <div class="form-group col-md-7">
+              <label for="inputAddress">Dirección</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputAddress"
+                placeholder="Barrio XXXXX Calle XXXX"
+                value={this.state.campDireccion}
+                onChange={value =>
+                  this.setState({ campDireccion: value.target.value })
+                }
+              />
+            </div>
 
-          <div class="form-group col-md-7">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              onClick={() => this.onUpdate(userId)}
-            >
-              Actualizar
-            </button>
+            <div class="form-group col-md-7">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                onClick={() => this.onUpdate(userId)}
+              >
+                Actualizar
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     );
   }
 
