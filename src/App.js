@@ -22,6 +22,7 @@ import mesasOcupadas from "./components/mesas/mesasOcupadas";
 // Pedido
 import Pedido from "./components/pedido/formPedido";
 import PedidoList from "./components/pedido/pedidoList";
+import Prefactura from "./components/pedido/prefactura";
 
 // Inicio de sesión
 import Login from "./components/login";
@@ -39,13 +40,21 @@ function App() {
           <div class="row">
             <Switch>
               <Route path="/" exact component={Login} />
+              {/* Área de clientes */}
               <Route path="/listCliente" component={ListCliente} />
               <Route path="/formCliente" component={FormCliente} />
               <Route path="/edit/:id" component={EditCliente} />
+
+              {/* Área de mesas */}
               <Route path="/areas" component={Areas} />
+              <Route path="/MesasOcupadas" component={mesasOcupadas} />
+
+              {/* Área de pedidos */}
               <Route path="/formPedido/:id" component={Pedido} />
               <Route path="/pedidolist/:id" component={PedidoList} />
-              <Route path="/MesasOcupadas" component={mesasOcupadas} />
+              <Route path="/prefactura/:id" component={Prefactura} />
+
+              {/* Error */}
               <Route path="*" component={Pagina404} />
             </Switch>
           </div>

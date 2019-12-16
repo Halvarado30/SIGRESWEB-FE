@@ -161,7 +161,6 @@ class AreaComponent extends React.Component {
       const variable = localStorage.token;
       const decoded = jwt_decode(variable);
       const Url = baseUrl + "/pedidomesa/crear";
-      console.log("USUARIO: " + decoded.idregistro);
       const datapost = {
         idMesero: decoded.idregistro
       };

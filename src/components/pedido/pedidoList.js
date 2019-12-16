@@ -60,8 +60,8 @@ class ListaPedido extends React.Component {
                 <tr>
                   <th scope="col">Mesa</th>
                   <th scope="col">Nombre producto</th>
-                  <th scope="col">Precio</th>
                   <th scope="col">Cantidad</th>
+                  <th scope="col">Precio</th>
                 </tr>
               </thead>
               <tbody>{this.loadFillData(userId)}</tbody>
@@ -69,13 +69,16 @@ class ListaPedido extends React.Component {
             <Link className="btn btn-outline-info" to={"/formPedido/" + userId}>
               REGRESAR
             </Link>
+            <Link className="btn btn-outline-info" to={"/prefactura/" + userId}>
+              VER PREFACTURA
+            </Link>
 
             <Link
               className="btn btn-outline-info"
               onClick={() => this.sendSave(userId)}
               to={"/areas"}
             >
-              REALIZAR COMANDA
+              ENVIAR COMANDA
             </Link>
           </div>
         </div>
@@ -94,8 +97,8 @@ class ListaPedido extends React.Component {
         <tr>
           <td>{data.Mesa}</td>
           <td>{data.NombreProducto}</td>
-          <td>{data.PrecioProducto}</td>
           <td>{data.CantidadProducto}</td>
+          <td>{data.PrecioProducto}</td>
         </tr>
       );
     });

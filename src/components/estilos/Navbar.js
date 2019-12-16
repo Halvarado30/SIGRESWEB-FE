@@ -42,12 +42,6 @@ class Navbar extends React.Component {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/MesasOcupadas" className="nav-link">
-              <MDBIcon icon="stroopwafel" />
-              &nbsp; Mesas
-            </Link>
-          </li>
-          <li className="nav-item">
             <Link class="nav-link" onClick={this.logOut.bind(this)} to={"/"}>
               <MDBIcon icon="sign-in-alt" />
               &nbsp; Cerrar sesión

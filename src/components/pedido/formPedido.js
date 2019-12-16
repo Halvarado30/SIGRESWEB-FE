@@ -87,7 +87,7 @@ class PedidoComponent extends React.Component {
               to={"/pedidolist/" + userId}
               onClick={() => this.sendUpdate(userId)}
             >
-              VER PEDIDO
+              VER COMANDA
             </Link>
           </div>
 
