@@ -2,72 +2,56 @@ import React from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Form from "./module/form";
-import FormCliente from "./module/formCliente";
-import List from "./module/list";
-import ListCliente from "./module/listCliente";
-import Edit from "./module/edit";
-import EditCliente from "./module/editCliente";
-import Areas from "./module/areas";
-import Pedido from "./module/formPedido";
-import Login from "./module/login";
-import PedidoList from "./module/pedidoList";
-import mesasOcupadas from "./module/mesasOcupadas";
+// Elementos de diseño
+import Nav from "./components/estilos/Navbar";
+import Footer from "./components/estilos/Footer";
+
+// Componentes
+
+// Cliente
+import FormCliente from "./components/cliente/formCliente";
+import ListCliente from "./components/cliente/listCliente";
+import EditCliente from "./components/cliente/editCliente";
+
+// Mesas
+import Areas from "./components/mesas/areas";
+import mesasOcupadas from "./components/mesas/mesasOcupadas";
+
+// Pedido
+import Pedido from "./components/pedido/formPedido";
+import PedidoList from "./components/pedido/pedidoList";
+
+// Inicio de sesión
+import Login from "./components/login";
+
+// ERROR
+import Pagina404 from "./components/pagina404";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        {/* <nav class="navbar navbar-expand-lg navbar-light bg-light">
-          <a
-            class="navbar-brand"
-            href="https://www.facebook.com/"
-            style={{ color: "orange", fontWeight: "bold" }}
-          >
-            Frites and Grill
-          </a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <Link class="nav-link" to="/listCliente">
-                  {" "}
-                  Lista Clientes{" "}
-                </Link>
-              </li>
-            </ul>
-            <Link class="btn btn-info " to="/login">
-              Login
-            </Link>
-          </div>
-        </nav> */}
+        <Nav />
 
         <div class="container py-4">
           <div class="row">
-            <Route path="/" exact component={Areas} />
-            <Route path="/listCliente" component={ListCliente} />
-            <Route path="/form" component={Form} />
-            <Route path="/formCliente" component={FormCliente} />
-            <Route path="/edit/:id" component={EditCliente} />
-            <Route path="/listM/:id" component={Areas} />
-            <Route path="/login" component={Login} />
-            <Route path="/formPedido/:id" component={Pedido} />
-            <Route path="/pedidolist/:id" component={PedidoList} />
-            <Route path="/MesasOcupadas" component={mesasOcupadas} />
+            <Switch>
+              <Route path="/" exact component={Login} />
+              <Route path="/listCliente" component={ListCliente} />
+              <Route path="/formCliente" component={FormCliente} />
+              <Route path="/edit/:id" component={EditCliente} />
+              <Route path="/areas" component={Areas} />
+              <Route path="/formPedido/:id" component={Pedido} />
+              <Route path="/pedidolist/:id" component={PedidoList} />
+              <Route path="/MesasOcupadas" component={mesasOcupadas} />
+              <Route path="*" component={Pagina404} />
+            </Switch>
           </div>
         </div>
+
+        <Footer />
       </div>
     </Router>
   );

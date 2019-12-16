@@ -2,14 +2,13 @@ import React from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import { Link } from "react-router-dom";
-import { Button, ButtonGroup, ButtonToolbar } from "reactstrap";
-import * as globalUrl from "./variable";
+import { Link, Redirect } from "react-router-dom";
+import * as globalUrl from "../variable";
 import axios from "axios";
+import { MDBIcon } from "mdbreact";
 const baseUrl = globalUrl.url;
-// var valorcito = 0;
 
-class EditComponent extends React.Component {
+class PedidoComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +26,6 @@ class EditComponent extends React.Component {
   }
 
   componentDidMount() {
-    let areaId = this.state.valor;
     this.loadTipoP();
     this.loadProducto();
     this.loadProductoS();
@@ -76,49 +74,54 @@ class EditComponent extends React.Component {
 
   render() {
     let userId = this.props.match.params.id;
-    return (
-      <div>
-        {/* Sección para los tipos */}
-        <div class="form-group">
-          <label for="mesa" hidden>
-            MESA: {userId}
-          </label>
-          <Link
-            className="btn btn-outline-warning col-md-3"
-            to={"/pedidolist/" + userId}
-            onClick={() => this.sendUpdate(userId)}
-          >
-            VER PEDIDO
-          </Link>
-        </div>
+    if (localStorage.getItem("token")) {
+      return (
+        <div>
+          {/* Sección para los tipos */}
+          <div className="form-group">
+            <label for="mesa" hidden>
+              MESA: {userId}
+            </label>
+            <Link
+              className="btn btn-outline-warning col-md-3"
+              to={"/pedidolist/" + userId}
+              onClick={() => this.sendUpdate(userId)}
+            >
+              VER PEDIDO
+            </Link>
+          </div>
 
-        <div class="form-group col-md-4 float-left">{this.loadFillData()}</div>
-
-        <div className="float-right col-md-8">
-          <table class="table table-hover table-striped table-bordered table-responsive">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col" hidden>
-                  Categoria
-                </th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* Llenado de los productos por tipo */}
-              {this.loadFillData2(this.state.id)}
-            </tbody>
-          </table>
+          <div className="form-group col-md-4 float-left">
+            {this.loadFillData()}
+          </div>
+          <div className="float-right col-md-8">
+            <table className="table table-hover table-striped table-bordered table-responsive">
+              <thead className="thead-dark">
+                <tr>
+                  <th scope="col" hidden>
+                    Categoria
+                  </th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Llenado de los productos por tipo */}
+                {this.loadFillData2(this.state.id)}
+              </tbody>
+            </table>
+            {/* </div> */}
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return <Redirect to={{ pathname: "/" }} />;
+    }
   }
 
   cambioId(e) {
-    console.log(e);
     this.setState({
       id: e.target.value
     });
@@ -184,17 +187,17 @@ class EditComponent extends React.Component {
             </label>
           </td>
           <td>
-            <input class="col-md-10" id={valorcito} type="number" />
+            <input className="col-md-10" id={valorcito} type="number" />
           </td>
           <td>
             <button
               type="submit"
-              class="btn btn-primary"
+              className="btn btn-primary"
               onClick={() =>
                 this.sendSave(data.Codigo, data.Nombre, data.Precio, valorcito)
               }
             >
-              Guardar
+              <MDBIcon icon="cart-plus" size="2x" />
             </button>
           </td>
         </tr>
@@ -204,8 +207,14 @@ class EditComponent extends React.Component {
 
   sendSave(a, b, c, d) {
     var producto = a;
+    var otrovalor = 0;
     var valorinput = document.getElementById(d).value;
-    var otrovalor = parseInt(valorinput);
+    if (!valorinput) {
+      otrovalor = 1;
+    } else {
+      otrovalor = parseInt(valorinput);
+    }
+
     let userId = this.props.match.params.id;
     const Url = baseUrl + "/pedido/crear";
     const datapost = {
@@ -215,17 +224,12 @@ class EditComponent extends React.Component {
       CantidadProducto: otrovalor,
       Mesa: userId
     };
-
-    console.log(datapost);
-
     axios
       .post(Url, datapost)
       .then(response => {
         if (response.data.success === true) {
-          alert(response.data.message);
           this.sendSaveDetalle(producto, otrovalor);
         } else {
-          alert(response.data.message);
         }
       })
       .catch(error => {
@@ -240,20 +244,13 @@ class EditComponent extends React.Component {
       Cantidad: b
     };
 
-    console.log(datapost);
-
     axios
       .post(Url, datapost)
-      .then(response => {
-        if (response.data.success === true) {
-          alert(response.data.message);
-        } else {
-          alert(response.data.message);
-        }
-      })
+      .then(response => {})
       .catch(error => {
         alert("Error 34 " + error);
       });
+    document.location.reload(true);
   }
 
   sendUpdate(id) {
@@ -262,21 +259,13 @@ class EditComponent extends React.Component {
       estado: "O"
     };
 
-    console.log(datapost);
-
     axios
       .post(Url, datapost)
-      .then(response => {
-        if (response.data.success === true) {
-          alert(response.data.message);
-        } else {
-          alert(response.data.message);
-        }
-      })
+      .then(response => {})
       .catch(error => {
         alert("Error 34 " + error);
       });
   }
 }
 
-export default EditComponent;
+export default PedidoComponent;

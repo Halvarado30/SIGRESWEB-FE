@@ -3,13 +3,11 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import * as globalUrl from "./variable";
+import { Link, Redirect } from "react-router-dom";
+import * as globalUrl from "../variable";
 // Libreria de Sweetalert2
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
-
-// const baseUrl = "http://c83f4f51.ngrok.io";
 const baseUrl = globalUrl.url;
 
 class listComponent extends React.Component {
@@ -39,28 +37,39 @@ class listComponent extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <table class="table table-hover table-striped table-bordered table-responsive">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Id Cliente</th>
-              <th scope="col">RTN</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Direccion</th>
-              <th scope="col">Telefono</th>
-              <th scope="col">Correo</th>
-              <th colspan="2">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr></tr>
-            {/* Llenado de lista de clientes */}
-            {this.loadFillData()}
-          </tbody>
-        </table>
-      </div>
-    );
+    if (localStorage.getItem("token")) {
+      return (
+        <div>
+          <Link className="btn btn-outline-info" to={"/formCliente"}>
+            Agregar Cliente
+          </Link>
+          <br />
+          <br />
+          <table className="table table-hover table-striped table-bordered table-responsive">
+            <thead className="thead-dark">
+              <tr>
+                <th scope="col" hidden>
+                  Id Cliente
+                </th>
+                <th scope="col">RTN</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Direccion</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Correo</th>
+                <th colspan="2">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr></tr>
+              {/* Llenado de lista de clientes */}
+              {this.loadFillData()}
+            </tbody>
+          </table>
+        </div>
+      );
+    } else {
+      return <Redirect to={{ pathname: "/" }} />;
+    }
   }
 
   // Carga de los datos de clientes
@@ -68,24 +77,27 @@ class listComponent extends React.Component {
     return this.state.listCliente.map(data => {
       return (
         <tr>
-          <th>{data.idregistro}</th>
+          <th hidden>{data.idregistro}</th>
           <td>{data.rtn}</td>
           <td>{data.nombre}</td>
           <td>{data.direccion}</td>
           <td>{data.telefono}</td>
           <td>{data.correo}</td>
           <td>
-            <Link class="btn btn-outline-info" to={"/edit/" + data.idregistro}>
-              Editar
+            <Link
+              className="btn btn-outline-info"
+              to={"/edit/" + data.idregistro}
+            >
+              EDITAR
             </Link>
           </td>
           <td>
             <button
-              class="btn btn-outline-danger"
+              className="btn btn-outline-danger"
               onClick={() => this.onDelete(data.idregistro)}
             >
               {" "}
-              Eliminar{" "}
+              ELIMINAR{" "}
             </button>
           </td>
         </tr>

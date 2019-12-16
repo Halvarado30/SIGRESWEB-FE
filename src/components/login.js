@@ -4,11 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import axios from "axios";
 import * as globalUrl from "./variable";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import "./estilos/estilo.css";
 
 const baseUrl = globalUrl.url;
 
-class EditComponent extends React.Component {
+class LoginComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,23 +18,27 @@ class EditComponent extends React.Component {
       campContrasenia: "",
       isSignedUp: false
     };
-
-    // this.sendSave = this.sendSave.bind(this);
   }
 
   render() {
     if (this.state.isSignedUp) {
-      return <Redirect to={{ pathname: "/" }} />;
+      return <Redirect to={{ pathname: "/areas" }} />;
     }
     return (
       <div>
-        <div class="form-row justify-content-center">
+        <div className="formimagen">
+          <img src="./img/logoFrites_Grill.png" alt="logo"></img>
+          <br />
+          <br />
+          <h5>Inicio de sesión</h5>
+        </div>
+        <div className="form-login">
           {/* sección para el nombre de Usuario */}
-          <div class="form-group col-md-7">
+          <div className="form-group col-md-10">
             <label for="inputPassword4">Nombre de Usuario</label>
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               placeholder="Nombre de usuario"
               value={this.state.campLogin}
               onChange={value =>
@@ -44,11 +49,11 @@ class EditComponent extends React.Component {
           </div>
 
           {/* sección para la contraseña del usuario*/}
-          <div class="form-group col-md-7">
+          <div className="form-group col-md-10">
             <label for="inputPassword4">Contraseña</label>
             <input
               type="password"
-              class="form-control"
+              className="form-control"
               placeholder="••••••••••••••"
               value={this.state.campContrasenia}
               onChange={value =>
@@ -58,13 +63,13 @@ class EditComponent extends React.Component {
             />
           </div>
 
-          <div class="form-group col-md-7">
+          <div className="form-group col-md-7">
             <button
               type="submit"
-              class="btn btn-primary"
+              className="btn btn-primary"
               onClick={() => this.sendSave()}
             >
-              Acceder
+              ACCEDER
             </button>
           </div>
         </div>
@@ -79,20 +84,15 @@ class EditComponent extends React.Component {
       alert("Digite la contraseña");
     } else {
       const bUrl = baseUrl + "/usuario/login";
-
-      console.log(this.state.campLogin);
-      console.log(this.state.campContrasenia);
       const datapost = {
         LoginUsuario: this.state.campLogin,
         Contrasena: this.state.campContrasenia
       };
-
-      console.log(datapost);
-
       return axios
         .post(bUrl, datapost)
         .then(response => {
           if (response.status === 200) {
+            localStorage.setItem("token", response.data.token);
             this.setState({ isSignedUp: true });
           }
         })
@@ -105,14 +105,6 @@ class EditComponent extends React.Component {
         });
     }
   }
-
-  // handleLoginChange(e) {
-  //   this.setState({ campLogin: e.target.value });
-  // }
-
-  // handlePasswordChange(e) {
-  //   this.setState({ campContrasenia: e.target.value });
-  // }
 }
 
-export default EditComponent;
+export default LoginComponent;
